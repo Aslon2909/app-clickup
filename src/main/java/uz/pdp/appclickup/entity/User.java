@@ -1,4 +1,4 @@
-package uz.pdp.entity;
+package uz.pdp.appclickup.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,11 +7,12 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import uz.pdp.entity.enums.SystemRoleName;
-import uz.pdp.entity.template.AbsUUIDEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import uz.pdp.appclickup.entity.enums.SystemRoleName;
+import uz.pdp.appclickup.entity.template.AbsUUIDEntity;
 
 import javax.persistence.*;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -20,7 +21,8 @@ import java.util.Collections;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class User extends AbsUUIDEntity implements UserDetails {
+@Table(name = "users")
+public class  User extends AbsUUIDEntity implements UserDetails {
 
     @Column(unique = true, nullable = false)
     private String fullName;
@@ -38,13 +40,18 @@ public class User extends AbsUUIDEntity implements UserDetails {
     private Attachment avatar;
 
     private boolean enabled;
-    private boolean accountNonExpired;
-    private boolean accountNonLocked;
-    private boolean credentialsNonExpired;
+    private boolean accountNonExpired = true;
+    private boolean accountNonLocked = true;
+    private boolean credentialsNonExpired = true;
+
 
     @Enumerated(EnumType.STRING)
     private SystemRoleName systemRoleName;
 
+    private String emailCode;
+    public String getPassword() {
+        return new BCryptPasswordEncoder().encode(this.password);
+    }
 
     @Override
 
@@ -76,5 +83,12 @@ public class User extends AbsUUIDEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return this.enabled;
+    }
+
+    public User(String fullName, String email, String password, SystemRoleName systemRoleName) {
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+        this.systemRoleName = systemRoleName;
     }
 }

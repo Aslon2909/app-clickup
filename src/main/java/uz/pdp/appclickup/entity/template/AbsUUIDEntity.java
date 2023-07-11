@@ -1,4 +1,4 @@
-package uz.pdp.entity.template;
+package uz.pdp.appclickup.entity.template;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,10 +13,7 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @MappedSuperclass
-public abstract class  AbsUUIDEntity extends AbsMAINEntity{
+public abstract class AbsUUIDEntity extends AbsMAINEntity {
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @Type(type = "org.hibernate.PostgresUUIDType")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
+    private UUID id = UUID.randomUUID();
 }

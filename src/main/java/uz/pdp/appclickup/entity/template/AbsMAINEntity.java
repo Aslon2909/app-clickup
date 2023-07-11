@@ -1,17 +1,17 @@
-package uz.pdp.entity.template;
+package uz.pdp.appclickup.entity.template;
 
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import uz.pdp.entity.User;
+import uz.pdp.appclickup.entity.User;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Data
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class )
+@EntityListeners(AuditingEntityListener.class)
 public abstract class AbsMAINEntity {
 
 

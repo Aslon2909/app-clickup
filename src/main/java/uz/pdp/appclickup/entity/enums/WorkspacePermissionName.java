@@ -1,4 +1,4 @@
-package uz.pdp.entity.enums;
+package uz.pdp.appclickup.entity.enums;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,16 +12,16 @@ public enum WorkspacePermissionName {
             Arrays.asList(WorkSpaceRoleName.ROLE_OWNER, WorkSpaceRoleName.ROLE_ADMIN)),
 
     CAN_EDIT_WORKSPACE("CAN_EDIT_WORKSPACE",
-            "Gives the usep the permission to remove members to the Workspace",
+            "Gives the user the permission to remove members to the Workspace",
             Arrays.asList(WorkSpaceRoleName.ROLE_OWNER, WorkSpaceRoleName.ROLE_ADMIN)),
     CAN_ADD_GUEST("CAN_ADD_GUEST", "Gives the user the permission to remove members to the Workspace",
             Arrays.asList(WorkSpaceRoleName.ROLE_OWNER, WorkSpaceRoleName.ROLE_ADMIN));
 
 
-    public String name;
-    public String description;
+    public final String name;
+    public final String description;
 
-    public List<WorkSpaceRoleName> workSpaceRoleName;
+    public final List<WorkSpaceRoleName> workSpaceRoleName;
     WorkspacePermissionName(String name, String description, List<WorkSpaceRoleName> workSpaceRoleNames) {
         this.name = name;
         this.description = description;

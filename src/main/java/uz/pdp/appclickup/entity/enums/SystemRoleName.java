@@ -1,4 +1,4 @@
-package uz.pdp.entity.enums;
+package uz.pdp.appclickup.entity.enums;
 
 public enum SystemRoleName {
     SYSTEM_ROLE_ADMIN,
