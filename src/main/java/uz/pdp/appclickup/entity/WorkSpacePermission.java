@@ -19,5 +19,5 @@ public class WorkSpacePermission extends   AbsUUIDEntity {
     private WorkSpaceRole workSpaceRole;
 
     @Enumerated(EnumType.STRING)
-    private WorkspacePermissionName permission;
+    private WorkspacePermissionName permission;//add member, remove
 }

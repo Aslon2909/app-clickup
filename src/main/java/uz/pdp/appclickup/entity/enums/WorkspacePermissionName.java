@@ -18,13 +18,27 @@ public enum WorkspacePermissionName {
             Arrays.asList(WorkSpaceRoleName.ROLE_OWNER, WorkSpaceRoleName.ROLE_ADMIN));
 
 
-    public final String name;
-    public final String description;
+    private String name;
+    private String description;
+    private List<WorkSpaceRoleName> workSpaceRoleName;
 
-    public final List<WorkSpaceRoleName> workSpaceRoleName;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<WorkSpaceRoleName> getWorkSpaceRoleName() {
+        return workSpaceRoleName;
+    }
+
     WorkspacePermissionName(String name, String description, List<WorkSpaceRoleName> workSpaceRoleNames) {
         this.name = name;
         this.description = description;
         this.workSpaceRoleName = workSpaceRoleNames;
     }
+
 }

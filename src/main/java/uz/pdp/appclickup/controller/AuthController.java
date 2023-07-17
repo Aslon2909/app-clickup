@@ -1,6 +1,5 @@
 package uz.pdp.appclickup.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,8 +18,19 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-    @Autowired
+    private final
     AuthService authService;
+    private final
+    AuthenticationManager authenticationManager;
+    private final
+    JwtProvider jwtProvider;
+
+    public AuthController(AuthService authService, AuthenticationManager authenticationManager, JwtProvider jwtProvider) {
+        this.authService = authService;
+        this.authenticationManager = authenticationManager;
+        this.jwtProvider = jwtProvider;
+    }
+
 
     @PostMapping("/register")
     public HttpEntity<?> registerUser(@Valid @RequestBody RegisterDto registerDto) {
@@ -28,18 +38,14 @@ public class AuthController {
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
-    @Autowired
-    AuthenticationManager authenticationManager;
-    @Autowired
-    JwtProvider jwtProvider;
 
     @PostMapping("/login")
-    public HttpEntity<?> login(@Valid  @RequestBody LoginDto loginDto) {
+    public HttpEntity<?> login(@Valid @RequestBody LoginDto loginDto) {
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     loginDto.getEmail(),
                     loginDto.getPassword()));
-             User user = (User) authentication.getPrincipal();
+            User user = (User) authentication.getPrincipal();
             String token = jwtProvider.generateToken(user.getEmail());
             return ResponseEntity.ok(token);
         } catch (Exception e) {

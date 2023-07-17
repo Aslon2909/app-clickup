@@ -1,8 +1,8 @@
 package uz.pdp.appclickup.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +24,15 @@ import java.util.Properties;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final AuthService authService;
+    private final JwtFilter jwtFilter;
+
+    public SecurityConfig(@Lazy AuthService authService,
+                          @Lazy JwtFilter jwtFilter) {
+        this.authService = authService;
+        this.jwtFilter = jwtFilter;
+    }
+
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -35,16 +44,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Autowired
-    AuthService authService;
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(authService).passwordEncoder(passwordEncoder());
     }
-
-    @Autowired
-    JwtFilter jwtFilter;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -81,3 +84,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 }
+
